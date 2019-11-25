@@ -7,7 +7,9 @@ asyncAnswers = {
    * @returns {then: function} A promise like object containing a then property.
    */
   async: function async(value) {
-
+    return new Promise(resolve => {
+      resolve(value);
+    });
   },
 
   /**
@@ -21,6 +23,12 @@ asyncAnswers = {
    * @returns {then: function} A promise like object containing a then property.
    */
   manipulateRemoteData: function manipulateRemoteData(url) {
-
+    let promise = new Promise(resolve => {
+      $.ajax(url).then(response => {
+        let peopleArr = response.people.map(person => person.name).sort();
+        resolve(peopleArr);
+      });
+    });
+    return promise;
   },
 };
